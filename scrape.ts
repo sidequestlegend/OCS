@@ -79,23 +79,23 @@ export class Scrape{
                 }
             });
         });
-        console.log('Found', quest_apps.data.node.all_items.edges.filter(d=>d.rift_cross_buy).length, ' apps with cross-buy between quest and rift.');
+        console.log("Found", quest_apps.data.node.all_items.edges.filter(d=>d.rift_cross_buy).length, "apps with cross-buy between quest and rift.");
         return quest_apps;
     }
 
     async accessToken(): Promise<string>{
         let pageHtml = await (await fetch(SECTION_URL)).text();
-        console.log('Loading "Browse All" page');
+        console.log("Loading \"Browse All\" page");
         let dom = cheerio.load(pageHtml);
-        let scriptTags = dom('link[rel="preload"]');
+        let scriptTags = dom("link[rel=\"preload\"]");
         for(let i = 0; i < scriptTags.length; i++){
             let scriptUrl = (<any>scriptTags[i]).attribs.href;
             if(scriptUrl.startsWith(SCRIPT_URL_START)){
-                console.log('Found preload script. Checking for access token: ', scriptUrl);
+                console.log("Found preload script. Checking for access token: ", scriptUrl);
                 let scriptSrc = await (await fetch(scriptUrl)).text();
-                if(scriptSrc.indexOf('SKYLINE_WEB:"') > -1){
-                    let accessToken = scriptSrc.split('SKYLINE_WEB:"')[1].split('"')[0];
-                    console.log('Found access_token:', accessToken);
+                if(scriptSrc.indexOf("SKYLINE_WEB:\"") > -1){
+                    let accessToken = scriptSrc.split("SKYLINE_WEB:\"")[1].split("\"")[0];
+                    console.log("Found access_token:", accessToken);
                     return accessToken;
                 }
             }
@@ -112,12 +112,12 @@ export class Scrape{
             "hmdType":hmdType
         };
         index = index || 1;
-        console.log('Loading', hmdType, 'apps page: ', index);
+        console.log("Loading", hmdType, "apps page: ", index);
         let body = new FormData();
-        body.append('access_token','OC|' + accessToken + '|');
-        body.append('doc_id', DOC_ID);
-        body.append('variables',JSON.stringify(pageParams));
-        let response: ScrapeData = await (await fetch(SECTION_LIST_URL, {method: 'POST', body})).json();
+        body.append("access_token","OC|" + accessToken + "|");
+        body.append("doc_id", DOC_ID);
+        body.append("variables",JSON.stringify(pageParams));
+        let response: ScrapeData = await (await fetch(SECTION_LIST_URL, {method: "POST", body})).json();
         console.log("Found " + response.data.node.all_items.edges.length + " apps");
         if(response.data.node.all_items.page_info.has_next_page){
             response.data.node.all_items.edges = response.data.node.all_items.edges
@@ -126,7 +126,7 @@ export class Scrape{
         if(currentList) {
             return response.data.node.all_items.edges;
         }
-        console.log('Finished loading', hmdType, 'apps page. Loaded', response.data.node.all_items.edges.length, 'apps.');
+        console.log("Finished loading", hmdType, "apps page. Loaded", response.data.node.all_items.edges.length, "apps.");
         return response;
     }
 }

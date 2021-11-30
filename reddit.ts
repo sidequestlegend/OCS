@@ -52,7 +52,7 @@ export class Reddit implements PlatformInterface{
         let headers = {
             "Authorization":"Basic " + Buffer.from(REDDIT_CLIENTID + ":" + REDDIT_SECRET).toString('base64'),
             "user_agent":"Web:QuestStoreScraper:v0.2 (by /u/weathon & /u/shakamone)",
-            'Content-Type': 'application/x-www-form-urlencoded'
+            "Content-Type": "application/x-www-form-urlencoded"
         }
         let body = "grant_type=password&username=" + REDDIT_USERNAME + "&password=" + REDDIT_PASSWORD;
 
@@ -72,8 +72,8 @@ export class Reddit implements PlatformInterface{
             this.access_token = await this.getAccessToken();
         }
         let headers = {
-            'authorization': 'Bearer ' + this.access_token,
-            'Content-type': 'application/x-www-form-urlencoded',
+            "authorization": "Bearer " + this.access_token,
+            "Content-type": "application/x-www-form-urlencoded",
         };
         let body = this.encodeUriParams({
             "kind": "link",
