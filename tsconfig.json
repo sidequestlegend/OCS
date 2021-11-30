@@ -1,0 +1,18 @@
+{
+  "ts-node": {
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
+  "compilerOptions": {
+    "target": "es5",
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "lib": [ "es2015" ],
+    "module": "commonJS"
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
