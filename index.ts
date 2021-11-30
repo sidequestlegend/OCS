@@ -24,14 +24,14 @@ let run = async () => {
         }
         for(let i = 0; i < (processedData.new_apps.length > 1 ? 1 : processedData.new_apps.length); i++){
             if(processedData.new_apps[i].node.viewer_had_preorder){
+                console.log("Posting new Preorder Release to", platforms[i].constructor.name, "for", processedData.new_apps[i].node.display_name);
                 await platforms[i].postPreorderReleased(processedData.new_apps[i]);
-                console.log("Posting new Preorder Release to reddit for ", processedData.new_apps[i].node.display_name);
             }else if(processedData.new_apps[i].node.viewer_has_preorder){
+                console.log("Posting new Preorder to", platforms[i].constructor.name, "for", processedData.new_apps[i].node.display_name);
                 await platforms[i].postPreorder(processedData.new_apps[i]);
-                console.log("Posting new Preorder to reddit for ", processedData.new_apps[i].node.display_name);
             }else{
+                console.log("Posting new app to", platforms[i].constructor.name, "for", processedData.new_apps[i].node.display_name);
                 await platforms[i].postNew(processedData.new_apps[i]);
-                console.log("Posting new app to reddit for ", processedData.new_apps[i].node.display_name);
             }
         }
         // await platforms[i].run(processedData);

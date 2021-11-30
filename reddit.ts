@@ -63,13 +63,24 @@ export class Reddit implements PlatformInterface{
         }
 
         let response = await fetch(REDDIT_ACCESS_TOKEN_URL, options);
-        let data = await response.json();
-        return data['access_token'];
+        let jsonData, data = await response.text();
+        try{
+            jsonData = JSON.parse(data);
+            return jsonData['access_token'];
+        }catch(e){
+            console.log("Reddit response:", data);
+            console.log(e);
+            return null;
+        }
     }
 
     async post(item: ScrapeDataItem, message: string){
         if(!this.access_token){
             this.access_token = await this.getAccessToken();
+            if(!this.access_token){
+                console.log("Could not get an access token from reddit, are they rate limiting? Skipping...");
+                return;
+            }
         }
         let headers = {
             "authorization": "Bearer " + this.access_token,
