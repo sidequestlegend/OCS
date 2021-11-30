@@ -48,27 +48,6 @@ export class Reddit implements PlatformInterface{
         await this.post(data, message);
     }
 
-    // async run(data: { new_apps: ScrapeDataItem[]; updated_apps: ScrapeDataItem[] }) {
-    //     for(let i = 0; i < data.updated_apps.length; i++){
-    //         if(data.updated_apps[i].node.cross_buy_sale){
-    //             await this.postCrossBuySale(data.updated_apps[i])
-    //         }else{
-    //             await this.postSale(data.updated_apps[i]);
-    //         }
-    //     }
-    //     for(let i = 0; i < (data.new_apps.length > 1 ? 1 : data.new_apps.length); i++){
-    //         if(data.new_apps[i].node.viewer_had_preorder){
-    //             await this.postPreorderReleased(data.new_apps[i]);
-    //             console.log('Posting new Preorder Release to reddit for ', data.new_apps[i].node.display_name);
-    //         }else if(data.new_apps[i].node.viewer_has_preorder){
-    //             await this.postPreorder(data.new_apps[i]);
-    //             console.log('Posting new Preorder to reddit for ', data.new_apps[i].node.display_name);
-    //         }else{
-    //             await this.postNew(data.new_apps[i]);
-    //             console.log('Posting new app to reddit for ', data.new_apps[i].node.display_name);
-    //         }
-    //     }
-    // }
     async getAccessToken() {
         let headers = {
             "Authorization":"Basic " + Buffer.from(REDDIT_CLIENTID + ":" + REDDIT_SECRET).toString('base64'),
